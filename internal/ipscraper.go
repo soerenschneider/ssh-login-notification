@@ -41,7 +41,7 @@ func NewScrape(options *Options) *Scrape {
 func (s *Scrape) scrapeEnvInfo() {
 	scrapeIp(s)
 
-	if s.Login.Ip == "UNDEF" && s.Login.Dns == "UNDEF"{
+	if s.Login.Ip == undef && s.Login.Dns == undef{
 		return
 	}
 
@@ -52,7 +52,7 @@ func (s *Scrape) scrapeEnvInfo() {
 		go fetchIpInfo(s.Login.Ip, ipInfoChan)
 	}
 
-	if s.Options.DnsLookup && s.Login.Dns == "UNDEF"{
+	if s.Options.DnsLookup && s.Login.Dns == undef{
 		go fetchDns(s.Login.Ip, dnsChan)
 	}
 
@@ -61,7 +61,7 @@ func (s *Scrape) scrapeEnvInfo() {
 		s.Login.IpInfo = *ipinfo
 	}
 
-	if s.Options.DnsLookup && s.Login.Dns == "UNDEF"{
+	if s.Options.DnsLookup && s.Login.Dns == undef{
 		s.Login.Dns, _ = <-dnsChan
 	}
 }
