@@ -1,4 +1,4 @@
-Create a config file in either /etc/default/sshnotification or $HOME/.sshnotification/sshnotification:
+Create a config file in either /etc/default/sshnotification.json or $HOME/.sshnotification/sshnotification.json:
 
 ```
 {
