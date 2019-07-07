@@ -26,7 +26,7 @@ func New(option *internal.Options) (*telegramBot, error) {
 		return nil, err
 	}
 
-	log.Printf("Authorized on account %s", client.bot.Self.UserName)
+	log.Debugf("Authorized on account %s", client.bot.Self.UserName)
 	return &client, nil
 }
 
