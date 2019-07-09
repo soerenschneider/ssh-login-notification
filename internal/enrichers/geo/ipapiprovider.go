@@ -13,7 +13,7 @@ import (
 type geoProviderIpApi struct {
 }
 
-func New() *geoProviderIpApi {
+func NewProviderIpApi() *geoProviderIpApi {
 	return &geoProviderIpApi{}
 }
 

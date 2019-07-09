@@ -1,6 +1,6 @@
 package geo
 
-/*
+
 import (
 	"encoding/json"
 	"fmt"
@@ -14,11 +14,11 @@ import (
 type geoProviderIpInfo struct {
 }
 
-func NewBla() GeoProvider {
+func NewGeoProviderIpInfo() *geoProviderIpInfo {
 	return &geoProviderIpInfo{}
 }
 
-func (p *geoProviderIpApi) Lookup(ip string) (*IpGeoInfo, error) {
+func (p *geoProviderIpInfo) Lookup(ip string) (*IpGeoInfo, error) {
 	uri := fmt.Sprintf("https://ipinfo.io/%v/geo", ip)
 	timeout := time.Duration(2 * time.Second)
 	client := http.Client{
@@ -42,4 +42,3 @@ func (p *geoProviderIpApi) Lookup(ip string) (*IpGeoInfo, error) {
 
 	return nil, err
 }
-*/
