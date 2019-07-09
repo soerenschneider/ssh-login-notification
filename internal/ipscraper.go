@@ -41,15 +41,15 @@ func NewScrape(options *Options) *Scrape {
 func (s *Scrape) scrapeEnvInfo() {
 	scrapeIp(s)
 
-	if s.Login.Ip == undef && s.Login.Dns == undef{
+	if s.Login.Ip == undef && s.Login.Dns == undef {
 		return
 	}
 
-	ipInfoChan := make(chan *geo.IpGeoInfo)
+	ipGeoInfoChan := make(chan *geo.IpGeoInfo)
 	dnsChan := make(chan string)
 
 	if s.Options.GeoLookup {
-		go fetchIpInfo(s.Login.Ip, ipInfoChan)
+		go fetchIpInfo(s.Login.Ip, ipGeoInfoChan)
 	}
 
 	if s.Options.DnsLookup && s.Login.Dns == undef{
@@ -57,13 +57,16 @@ func (s *Scrape) scrapeEnvInfo() {
 	}
 
 	if s.Options.GeoLookup {
-		ipinfo := <-ipInfoChan
-		s.Login.IpInfo = *ipinfo
+		ipGeoInfo := <-ipGeoInfoChan
+		s.Login.Geo = *ipGeoInfo
 	}
 
 	if s.Options.DnsLookup && s.Login.Dns == undef{
 		s.Login.Dns, _ = <-dnsChan
 	}
+
+	close(ipGeoInfoChan)
+	close(dnsChan)
 }
 
 func scrapeIp(scrape *Scrape) {
@@ -99,7 +102,6 @@ func extractPamRhost(scrape *Scrape) bool {
 	if len(rhost) > 0 {
 		scrape.Login.Dns = rhost
 		scrape.Login.User = os.Getenv("PAM_USER")
-
 		scrape.Login.Ip, _ = enrichers.IpLookup(rhost)
 
 		return true
@@ -109,7 +111,8 @@ func extractPamRhost(scrape *Scrape) bool {
 }
 
 func fetchIpInfo(s string, c chan *geo.IpGeoInfo) {
-	lookupProvider := geo.New()
+	var lookupProvider GeoProvider
+	lookupProvider = geo.NewProviderIpApi()
 	a, _ := lookupProvider.Lookup(s)
 	c <- a
 }
