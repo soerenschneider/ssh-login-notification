@@ -7,10 +7,12 @@ import (
 	"text/template"
 )
 
-var templ = "New login on {{ .Host }} for {{ .User }} from {{ .Ip }}{{ if or .Dns (or .IpInfo.Isp .IpInfo.Org )}} ({{ .PrettyPrintProvider }}){{ end }} {{ if .IpInfo }} {{ .PrettyPrintLocation }}{{ end }}"
+const (
+	templ = "New login on {{ .Host }} for {{ .User }} from {{ .Ip }}{{ if or .Dns (or .Geo.Isp .Geo.Org )}} ({{ .PrettyPrintProvider }}){{ end }}{{ if or .Geo.City .Geo.Country .Geo.Region }} {{ .PrettyPrintLocation }}{{ end }}"
+	templateName = "defaultTemplate"
+)
 
 func Format(a internal.SshLoginNotification) string {
-	templateName := "default"
 	t, err := template.New(templateName).Parse(templ)
 	if err != nil {
 		log.Panicf("Template is faulty: %v", err)
