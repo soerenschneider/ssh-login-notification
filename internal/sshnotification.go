@@ -7,22 +7,22 @@ import (
 )
 
 type SshLoginNotification struct {
-	Ip     string
-	Host   string
-	Port   string
-	User   string
-	Date   time.Time
-	Dns    string
-	IpInfo geo.IpGeoInfo
+	Ip   string
+	Host string
+	Port string
+	User string
+	Date time.Time
+	Dns  string
+	Geo  geo.IpGeoInfo
 }
 
 func (s *SshLoginNotification) PrettyPrintLocation() string {
-	fields := []string{s.IpInfo.City, s.IpInfo.Region, s.IpInfo.Country}
+	fields := []string{s.Geo.City, s.Geo.Region, s.Geo.Country}
 	return getConcatFields(fields)
 }
 
 func (s *SshLoginNotification) PrettyPrintProvider() string {
-	fields := []string{s.Dns, s.IpInfo.Org, s.IpInfo.Isp}
+	fields := []string{s.Dns, s.Geo.Org, s.Geo.Isp}
 	return getConcatFields(fields)
 }
 
