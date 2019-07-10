@@ -12,6 +12,7 @@ func TestFormatFull(t *testing.T) {
 	scrape.Host = "thishost"
 	scrape.Ip = "8.8.8.8"
 	scrape.User = "soeren"
+
 	scrape.Geo.Country = "US"
 	scrape.Geo.Region = "NJ"
 	scrape.Geo.City = "Newark"

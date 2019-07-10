@@ -11,6 +11,8 @@ import (
 type geoProviderIpInfo struct {
 }
 
+// NewGeoProviderIpInfo instantiates a new ip geo provider
+// that queries ipinfo.io.
 func NewGeoProviderIpInfo() *geoProviderIpInfo {
 	return &geoProviderIpInfo{}
 }

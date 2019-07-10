@@ -1,5 +1,7 @@
 package geo
 
+// IpGeoInfo contains all the information that was gathered about
+// a IP.
 type IpGeoInfo struct {
 	Ip      string `json:"ip,omitempty"`
 	City    string `json:"city,omitempty"`

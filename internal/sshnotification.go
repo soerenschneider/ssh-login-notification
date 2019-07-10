@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+// SshLoginNotification contains the gathered information about
+// a SSH login.
 type SshLoginNotification struct {
 	Ip   string
 	Host string
@@ -15,11 +17,15 @@ type SshLoginNotification struct {
 	Geo  geo.IpGeoInfo
 }
 
+// PrettyPrintLocation returns a comma separated string of the
+// geo information.
 func (s *SshLoginNotification) PrettyPrintLocation() string {
 	fields := []string{s.Geo.City, s.Geo.Region, s.Geo.Country}
 	return getConcatFields(fields)
 }
 
+// PrettyPrintProvider returns a comma separated string of the
+// provider information.
 func (s *SshLoginNotification) PrettyPrintProvider() string {
 	fields := []string{s.Dns, s.Geo.Org, s.Geo.Isp}
 	return getConcatFields(fields)

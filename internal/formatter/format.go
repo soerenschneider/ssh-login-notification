@@ -12,6 +12,8 @@ const (
 	templateName = "defaultTemplate"
 )
 
+// Format accepts a struct containing the scraped ip information and
+// templates to return the final message string.
 func Format(a internal.SshLoginNotification) string {
 	t, err := template.New(templateName).Parse(templ)
 	if err != nil {

@@ -41,7 +41,7 @@ func Get() *cobra.Command {
 		options := parseOptions(main)
 		scraper := internal.NewScrape(&options)
 		formatted := formatter.Format(*scraper.Login)
-		output, err := telegram.New(&options)
+		output, err := telegram.NewTelegramBot(&options)
 		if err != nil {
 			log.Panic("Could not create telegram bot")
 		}

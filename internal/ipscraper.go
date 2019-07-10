@@ -13,15 +13,20 @@ const (
 	undef = "UNDEF"
 )
 
+// Scrape holds information about the successful login and
+// the options the user submitted.
 type Scrape struct {
 	Login   *SshLoginNotification
 	Options *Options
 }
 
+// GeoProvider is used to perform dns lookups.
 type GeoProvider interface {
 	Lookup(ip string) (*geo.IpGeoInfo, error)
 }
 
+// NewScrape instantiates a new struct and scrapes the providers
+// to collect information about the ip.
 func NewScrape(options *Options) *Scrape {
 	s := Scrape{Login: &SshLoginNotification{}}
 

@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// DnsLookup accepts an ip address and performs a reverse dns lookup.
 func DnsLookup(ip string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 1*time.Second)
 	// avoid resource leaks
@@ -20,6 +21,8 @@ func DnsLookup(ip string) (string, error) {
 	return "", err
 }
 
+// IpLookup accepts a hostname and performs a dns lookup to resolve its ip
+// address.
 func IpLookup(dns string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 3*time.Second)
 	// avoid resource leaks

@@ -13,7 +13,8 @@ type telegramBot struct {
 	receiver int64
 }
 
-func New(option *internal.Options) (*telegramBot, error) {
+// NewTelegramBot instantiates a new telegram bot.
+func NewTelegramBot(option *internal.Options) (*telegramBot, error) {
 	if nil == option {
 		return nil, errors.New("No configuration supplied.")
 	}
@@ -30,6 +31,7 @@ func New(option *internal.Options) (*telegramBot, error) {
 	return &client, nil
 }
 
+// Send accepts the message to be send to the user and dispatches it via telegram.
 func (b *telegramBot) Send(message string) {
 	msg := tgbotapi.NewMessage(b.receiver, message)
 	_, err := b.bot.Send(msg)
