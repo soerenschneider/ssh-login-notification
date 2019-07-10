@@ -17,7 +17,8 @@ const (
 	telegramId    = "telegram-id"
 )
 
-func Get() *cobra.Command {
+// FireUp parses the user supplied input and starts this whole mess.
+func FireUp() *cobra.Command {
 	viper.AutomaticEnv()
 	viper.SetConfigName("sshnotification")
 	viper.AddConfigPath("/etc/default")
@@ -51,6 +52,8 @@ func Get() *cobra.Command {
 	return main
 }
 
+// parseOptions converts the parsed options to the internally
+// used Options struct.
 func parseOptions(cmd *cobra.Command) internal.Options {
 	options := internal.Options{}
 
