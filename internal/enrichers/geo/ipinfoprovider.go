@@ -17,7 +17,7 @@ func NewGeoProviderIpInfo() *geoProviderIpInfo {
 
 func (p *geoProviderIpInfo) Lookup(ip string) (*IpGeoInfo, error) {
 	timeout := time.Duration(2 * time.Second)
-	client := http.Client{Timeout: timeout,}
+	client := http.Client{Timeout: timeout}
 
 	url := "https://ipinfo.io/%v/geo"
 	resp, err := client.Get(fmt.Sprintf(url, ip))
