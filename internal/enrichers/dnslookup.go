@@ -7,7 +7,7 @@ import (
 )
 
 func DnsLookup(ip string) (string, error) {
-	ctx, cancel := context.WithTimeout(context.TODO(), 1 * time.Second)
+	ctx, cancel := context.WithTimeout(context.TODO(), 1*time.Second)
 	// avoid resource leaks
 	defer cancel()
 
@@ -21,7 +21,7 @@ func DnsLookup(ip string) (string, error) {
 }
 
 func IpLookup(dns string) (string, error) {
-	ctx, cancel := context.WithTimeout(context.TODO(), 3 * time.Second)
+	ctx, cancel := context.WithTimeout(context.TODO(), 3*time.Second)
 	// avoid resource leaks
 	defer cancel()
 

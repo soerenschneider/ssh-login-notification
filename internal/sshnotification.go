@@ -9,7 +9,6 @@ import (
 type SshLoginNotification struct {
 	Ip   string
 	Host string
-	Port string
 	User string
 	Date time.Time
 	Dns  string

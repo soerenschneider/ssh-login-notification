@@ -1,9 +1,9 @@
 package main
 
 import (
-	"sshnot/cmd"
 	"fmt"
 	"os"
+	"sshnot/cmd"
 )
 
 func main() {

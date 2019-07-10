@@ -9,8 +9,8 @@ import (
 )
 
 type telegramBot struct {
-	bot  		*tgbotapi.BotAPI
-	receiver	int64
+	bot      *tgbotapi.BotAPI
+	receiver int64
 }
 
 func New(option *internal.Options) (*telegramBot, error) {

@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	nogeoresolv = "no-resolve-geo"
-	nodnsresolv = "no-resolve-dns"
+	nogeoresolv   = "no-resolve-geo"
+	nodnsresolv   = "no-resolve-dns"
 	telegramtoken = "telegram-token"
-	telegramId  = "telegram-id"
+	telegramId    = "telegram-id"
 )
 
 func Get() *cobra.Command {
@@ -29,7 +29,7 @@ func Get() *cobra.Command {
 	}
 
 	main := &cobra.Command{
-		Use:   "sshnotification",
+		Use: "sshnotification",
 	}
 
 	main.Flags().BoolP(nogeoresolv, "g", viper.GetBool(strings.Replace(nogeoresolv, "-", "_", -1)), "Do NOT lookup ip information")
@@ -65,4 +65,3 @@ func parseOptions(cmd *cobra.Command) internal.Options {
 
 	return options
 }
-

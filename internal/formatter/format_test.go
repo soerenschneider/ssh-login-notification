@@ -19,7 +19,7 @@ func TestFormatFull(t *testing.T) {
 	scrape.Geo.Org = "Google Inc"
 
 	actual := Format(scrape)
-	expected := fmt.Sprintf("New login on %v for %v from %v (%v, %v, %v) %v, %v, %v", scrape.Host, scrape.User, scrape.Ip, scrape.Dns,  scrape.Geo.Org, scrape.Geo.Isp, scrape.Geo.City, scrape.Geo.Region, scrape.Geo.Country)
+	expected := fmt.Sprintf("New login on %v for %v from %v (%v, %v, %v) %v, %v, %v", scrape.Host, scrape.User, scrape.Ip, scrape.Dns, scrape.Geo.Org, scrape.Geo.Isp, scrape.Geo.City, scrape.Geo.Region, scrape.Geo.Country)
 
 	if expected != actual {
 		t.Errorf("Didn't get expected text, got: %v", actual)

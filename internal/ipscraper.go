@@ -14,8 +14,8 @@ const (
 )
 
 type Scrape struct {
-	Login  		 *SshLoginNotification
-	Options 	 *Options
+	Login   *SshLoginNotification
+	Options *Options
 }
 
 type GeoProvider interface {
@@ -27,7 +27,6 @@ func NewScrape(options *Options) *Scrape {
 
 	s.Login.Host, _ = os.Hostname()
 	s.Login.Ip = undef
-	s.Login.Port = undef
 	s.Login.User = undef
 
 	s.Login.Date = time.Now()
@@ -52,7 +51,7 @@ func (s *Scrape) scrapeEnvInfo() {
 		go fetchIpInfo(s.Login.Ip, ipGeoInfoChan)
 	}
 
-	if s.Options.DnsLookup && s.Login.Dns == undef{
+	if s.Options.DnsLookup && s.Login.Dns == undef {
 		go fetchDns(s.Login.Ip, dnsChan)
 	}
 
@@ -61,7 +60,7 @@ func (s *Scrape) scrapeEnvInfo() {
 		s.Login.Geo = *ipGeoInfo
 	}
 
-	if s.Options.DnsLookup && s.Login.Dns == undef{
+	if s.Options.DnsLookup && s.Login.Dns == undef {
 		s.Login.Dns, _ = <-dnsChan
 	}
 
