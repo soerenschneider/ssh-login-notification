@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
-
-	log "github.com/sirupsen/logrus"
 )
 
 type geoProviderIpInfo struct {
@@ -18,26 +16,23 @@ func NewGeoProviderIpInfo() *geoProviderIpInfo {
 }
 
 func (p *geoProviderIpInfo) Lookup(ip string) (*IpGeoInfo, error) {
-	uri := fmt.Sprintf("https://ipinfo.io/%v/geo", ip)
 	timeout := time.Duration(2 * time.Second)
-	client := http.Client{
-		Timeout: timeout,
-	}
-	resp, err := client.Get(uri)
+	client := http.Client{Timeout: timeout,}
+
+	url := "https://ipinfo.io/%v/geo"
+	resp, err := client.Get(fmt.Sprintf(url, ip))
 	if err != nil {
 		return nil, err
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
 
 	ret := IpGeoInfo{}
 	err = json.Unmarshal(body, &ret)
 
-	if err == nil {
-		log.Infof("Received reply: '%v'", string(body))
-		return &ret, nil
-	}
-
-	return nil, err
+	return &ret, err
 }

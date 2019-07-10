@@ -84,9 +84,8 @@ func extractSshClient(scrape *Scrape) bool {
 	sshClient := os.Getenv("SSH_CLIENT")
 	if len(sshClient) > 0 {
 		split := strings.Split(sshClient, " ")
-		if len(split) >= 2 {
+		if len(split) >= 1 {
 			scrape.Login.Ip = split[0]
-			scrape.Login.Port = split[1]
 			scrape.Login.User = os.Getenv("USER")
 
 			return true
