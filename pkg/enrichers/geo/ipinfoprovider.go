@@ -5,23 +5,24 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"sshnot/internal"
 	"time"
 )
 
-type geoProviderIpApi struct {
+type geoProviderIpInfo struct {
 }
 
-// NewProviderIpApi instantiates a new ip geo provider that queries
-// ip-api.com for information about given IP.
-func NewProviderIpApi() *geoProviderIpApi {
-	return &geoProviderIpApi{}
+// NewGeoProviderIpInfo instantiates a new ip geo provider
+// that queries ipinfo.io.
+func NewGeoProviderIpInfo() *geoProviderIpInfo {
+	return &geoProviderIpInfo{}
 }
 
-func (p *geoProviderIpApi) Lookup(ip string) (*IpGeoInfo, error) {
+func (p *geoProviderIpInfo) Lookup(ip string) (*internal.IpGeoInfo, error) {
 	timeout := time.Duration(2 * time.Second)
 	client := http.Client{Timeout: timeout}
 
-	url := "http://ip-api.com/json/%v"
+	url := "https://ipinfo.io/%v/geo"
 	resp, err := client.Get(fmt.Sprintf(url, ip))
 	if err != nil {
 		return nil, err
@@ -33,7 +34,7 @@ func (p *geoProviderIpApi) Lookup(ip string) (*IpGeoInfo, error) {
 		return nil, err
 	}
 
-	ret := IpGeoInfo{}
+	ret := internal.IpGeoInfo{}
 	err = json.Unmarshal(body, &ret)
 
 	return &ret, err

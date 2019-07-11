@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	command := cmd.Get()
+	command := cmd.FireUp()
 	if err := command.Execute(); err != nil {
 		fmt.Printf("Error while executing command: %v\n", err)
 		os.Exit(1)

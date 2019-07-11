@@ -1,10 +1,11 @@
-package internal
+package pkg
 
 import (
 	log "github.com/sirupsen/logrus"
 	"os"
-	"sshnot/internal/enrichers"
-	"sshnot/internal/enrichers/geo"
+	"sshnot/internal"
+	"sshnot/pkg/enrichers"
+	"sshnot/pkg/enrichers/geo"
 	"strings"
 	"time"
 )
@@ -16,19 +17,19 @@ const (
 // Scrape holds information about the successful login and
 // the options the user submitted.
 type Scrape struct {
-	Login   *SshLoginNotification
-	Options *Options
+	Login   *internal.SshLoginNotification
+	Options *internal.Options
 }
 
 // GeoProvider is used to perform dns lookups.
 type GeoProvider interface {
-	Lookup(ip string) (*geo.IpGeoInfo, error)
+	Lookup(ip string) (*internal.IpGeoInfo, error)
 }
 
 // NewScrape instantiates a new struct and scrapes the providers
 // to collect information about the ip.
-func NewScrape(options *Options) *Scrape {
-	s := Scrape{Login: &SshLoginNotification{}}
+func NewScrape(options *internal.Options) *Scrape {
+	s := Scrape{Login: &internal.SshLoginNotification{}}
 
 	s.Login.Host, _ = os.Hostname()
 	s.Login.Ip = undef
@@ -49,7 +50,7 @@ func (s *Scrape) scrapeEnvInfo() {
 		return
 	}
 
-	ipGeoInfoChan := make(chan *geo.IpGeoInfo)
+	ipGeoInfoChan := make(chan *internal.IpGeoInfo)
 	dnsChan := make(chan string)
 
 	if s.Options.GeoLookup {
@@ -113,7 +114,7 @@ func extractPamRhost(scrape *Scrape) bool {
 	return false
 }
 
-func fetchIpInfo(s string, c chan *geo.IpGeoInfo) {
+func fetchIpInfo(s string, c chan *internal.IpGeoInfo) {
 	var lookupProvider GeoProvider
 	lookupProvider = geo.NewProviderIpApi()
 	a, _ := lookupProvider.Lookup(s)

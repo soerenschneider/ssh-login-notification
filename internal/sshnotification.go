@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"sshnot/internal/enrichers/geo"
 	"strings"
 	"time"
 )
@@ -14,7 +13,7 @@ type SshLoginNotification struct {
 	User string
 	Date time.Time
 	Dns  string
-	Geo  geo.IpGeoInfo
+	Geo  IpGeoInfo
 }
 
 // PrettyPrintLocation returns a comma separated string of the

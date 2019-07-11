@@ -1,4 +1,4 @@
-package geo
+package internal
 
 // IpGeoInfo contains all the information that was gathered about
 // a IP.

@@ -2,10 +2,9 @@ package telegram
 
 import (
 	"errors"
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 	log "github.com/sirupsen/logrus"
 	"sshnot/internal"
-
-	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 type telegramBot struct {
