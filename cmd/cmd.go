@@ -5,8 +5,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"sshnot/internal"
-	"sshnot/internal/dispatcher/telegram"
-	"sshnot/internal/formatter"
+	"sshnot/pkg"
 	"strings"
 )
 
@@ -33,20 +32,14 @@ func FireUp() *cobra.Command {
 		Use: "sshnotification",
 	}
 
-	main.Flags().BoolP(nogeoresolv, "g", viper.GetBool(strings.Replace(nogeoresolv, "-", "_", -1)), "Do NOT lookup ip information")
-	main.Flags().BoolP(nodnsresolv, "d", viper.GetBool(strings.Replace(nodnsresolv, "-", "_", -1)), "Do NOT lookup ip information")
+	main.Flags().BoolP(nogeoresolv, "g", viper.GetBool(strings.Replace(nogeoresolv, "-", "_", -1)), "Do NOT lookup ip geo information")
+	main.Flags().BoolP(nodnsresolv, "d", viper.GetBool(strings.Replace(nodnsresolv, "-", "_", -1)), "Do NOT lookup dns information")
 	main.Flags().StringP(telegramtoken, "t", viper.GetString(strings.Replace(telegramtoken, "-", "_", -1)), "Telegram bot token")
 	main.Flags().Int64P(telegramId, "i", viper.GetInt64(strings.Replace(telegramId, "-", "_", -1)), "Telegram message id")
 
 	main.Run = func(cmd *cobra.Command, args []string) {
 		options := parseOptions(main)
-		scraper := internal.NewScrape(&options)
-		formatted := formatter.Format(*scraper.Login)
-		output, err := telegram.NewTelegramBot(&options)
-		if err != nil {
-			log.Panic("Could not create telegram bot")
-		}
-		output.Send(formatted)
+		pkg.Cortex(&options)
 	}
 
 	return main
@@ -57,11 +50,11 @@ func FireUp() *cobra.Command {
 func parseOptions(cmd *cobra.Command) internal.Options {
 	options := internal.Options{}
 
-	nogeoresolv, _ := cmd.Flags().GetBool(nogeoresolv)
-	options.GeoLookup = !nogeoresolv
+	noGeoResolve, _ := cmd.Flags().GetBool(nogeoresolv)
+	options.GeoLookup = !noGeoResolve
 
-	nodnslookup, _ := cmd.Flags().GetBool(nodnsresolv)
-	options.DnsLookup = !nodnslookup
+	noDnsLookup, _ := cmd.Flags().GetBool(nodnsresolv)
+	options.DnsLookup = !noDnsLookup
 
 	options.TelegramToken, _ = cmd.Flags().GetString(telegramtoken)
 	options.TelegramId, _ = cmd.Flags().GetInt64(telegramId)
