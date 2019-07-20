@@ -1,0 +1,86 @@
+{
+  "port": 8080,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/json/0.0.0.0"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "body": {
+                "message":"reserved range",
+                "query":"0.0.0.0",
+                "status":"fail"
+            }
+          }
+        },
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/xml"
+            },
+            "body": "<error>email already exists</error>"
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/json/1.1.1.1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "body": {
+                "query": "1.1.1.1",
+                "status": "success",
+                "country": "Canada",
+                "countryCode": "CA",
+                "region": "QC",
+                "regionName": "Quebec",
+                "city": "Saint-Leonard",
+                "zip": "H1R",
+                "lat": 45.5833,
+                "lon": -73.6,
+                "timezone": "America/Toronto",
+                "isp": "Le Groupe Videotron Ltee",
+                "org": "Videotron Ltee",
+                "as": "AS5769 Videotron Telecom Ltee"
+            }
+          }
+        },
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/xml"
+            },
+            "body": "<error>email already exists</error>"
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "is": { "statusCode": 404 }
+        }
+      ]
+    }
+  ]
+}
