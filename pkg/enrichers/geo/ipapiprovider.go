@@ -10,20 +10,26 @@ import (
 )
 
 type geoProviderIpApi struct {
+	url string
 }
 
 // NewProviderIpApi instantiates a new ip geo provider that queries
 // ip-api.com for information about given IP.
-func NewProviderIpApi() *geoProviderIpApi {
-	return &geoProviderIpApi{}
+func NewProviderIpApi(url ...string) *geoProviderIpApi {
+	endpoint := "http://ip-api.com/json/%v"
+
+	if len(url) > 0 {
+		endpoint = url[0]
+	}
+
+	return &geoProviderIpApi{url: endpoint}
 }
 
 func (p *geoProviderIpApi) Lookup(ip string) (*internal.IpGeoInfo, error) {
 	timeout := time.Duration(2 * time.Second)
 	client := http.Client{Timeout: timeout}
 
-	url := "http://ip-api.com/json/%v"
-	resp, err := client.Get(fmt.Sprintf(url, ip))
+	resp, err := client.Get(fmt.Sprintf(p.url, ip))
 	if err != nil {
 		return nil, err
 	}
