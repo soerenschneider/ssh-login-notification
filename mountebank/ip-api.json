@@ -21,15 +21,6 @@
                 "status":"fail"
             }
           }
-        },
-        {
-          "is": {
-            "statusCode": 400,
-            "headers": {
-              "Content-Type": "application/xml"
-            },
-            "body": "<error>email already exists</error>"
-          }
         }
       ]
     },
@@ -63,23 +54,7 @@
                 "as": "AS5769 Videotron Telecom Ltee"
             }
           }
-        },
-        {
-          "is": {
-            "statusCode": 400,
-            "headers": {
-              "Content-Type": "application/xml"
-            },
-            "body": "<error>email already exists</error>"
-          }
-        }
-      ]
-    },
-    {
-      "responses": [
-        {
-          "is": { "statusCode": 404 }
-        }
+        }      
       ]
     }
   ]
