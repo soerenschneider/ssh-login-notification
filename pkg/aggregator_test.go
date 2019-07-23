@@ -1,30 +1,26 @@
 package pkg
 
-/*
 import (
 	"os"
 	"sshnot/internal"
-	"testing"
-)
-
-
-import (
-	"os"
-	"sshnot/internal"
+	"sshnot/pkg/scrapers"
 	"testing"
 )
 
 func TestScrapeIpV6(t *testing.T) {
 	raw := "::1 55234 22"
 	os.Setenv("SSH_CLIENT", raw)
-	scrape := NewAggregator(&internal.Options{GeoLookup: false, DnsLookup: false})
 
-	if scrape.Login == nil {
-		t.Error("GetRemoteUserInfo is nil")
+	scraper := scrapers.EnvScraper{}
+	remoteUserInfo := internal.RemoteUserInfo{}
+	err := scraper.GetRemoteUserInfo(&remoteUserInfo)
+
+	if err != nil {
+		t.Error("Error occured")
 	}
 
-	if scrape.Login.Ip != "::1" {
-		t.Errorf("Expected Ip to be ::1 but is: '%v'", scrape.Login.Ip)
+	if remoteUserInfo.Ip != "::1" {
+		t.Errorf("Expected Ip to be ::1 but is: '%v'", remoteUserInfo.Ip)
 	}
 
 	os.Unsetenv("SSH_CLIENT")
@@ -34,14 +30,16 @@ func TestScrapeIpV4(t *testing.T) {
 	raw := "123.123.123.123 55234 22"
 	os.Setenv("SSH_CLIENT", raw)
 
-	scrape := NewAggregator(&internal.Options{GeoLookup: false, DnsLookup: false})
+	scraper := scrapers.EnvScraper{}
+	remoteUserInfo := internal.RemoteUserInfo{}
+	err := scraper.GetRemoteUserInfo(&remoteUserInfo)
 
-	if scrape.Login == nil {
-		t.Error("GetRemoteUserInfo is nil")
+	if err != nil {
+		t.Error("Error occured")
 	}
 
-	if scrape.Login.Ip != "123.123.123.123" {
-		t.Errorf("Expected Ip to be 123.123.123.123 but is: '%v'", scrape.Login.Ip)
+	if remoteUserInfo.Ip != "123.123.123.123" {
+		t.Errorf("Expected Ip to be 123.123.123.123 but is: '%v'", remoteUserInfo.Ip)
 	}
 
 	os.Unsetenv("SSH_CLIENT")
@@ -51,18 +49,17 @@ func TestScrapeRhost(t *testing.T) {
 	raw := "localhost"
 	os.Setenv("PAM_RHOST", raw)
 
-	scrape := NewAggregator(&internal.Options{GeoLookup: false, DnsLookup: false})
+	scraper := scrapers.EnvScraper{}
+	remoteUserInfo := internal.RemoteUserInfo{}
+	err := scraper.GetRemoteUserInfo(&remoteUserInfo)
 
-	if scrape.Login == nil {
-		t.Error("GetRemoteUserInfo is nil")
+	if err != nil {
+		t.Error("Error occured")
 	}
 
-	if scrape.Login.Ip != "127.0.0.1" && scrape.Login.Ip != "::1" {
-		t.Errorf("Expected Ip to be 123.123.123.123 but is: '%v'", scrape.Login.Ip)
+	if remoteUserInfo.Ip != "127.0.0.1" && remoteUserInfo.Ip != "::1" {
+		t.Errorf("Expected Ip to be 123.123.123.123 but is: '%v'", remoteUserInfo.Ip)
 	}
 
 	os.Unsetenv("PAM_RHOST")
 }
-
-
-*/
