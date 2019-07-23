@@ -44,22 +44,3 @@ func TestScrapeIpV4(t *testing.T) {
 
 	os.Unsetenv("SSH_CLIENT")
 }
-
-func TestScrapeRhost(t *testing.T) {
-	raw := "localhost"
-	os.Setenv("PAM_RHOST", raw)
-
-	scraper := scrapers.EnvScraper{}
-	remoteUserInfo := internal.RemoteUserInfo{}
-	err := scraper.GetRemoteUserInfo(&remoteUserInfo)
-
-	if err != nil {
-		t.Error("Error occured")
-	}
-
-	if remoteUserInfo.Ip != "127.0.0.1" && remoteUserInfo.Ip != "::1" {
-		t.Errorf("Expected Ip to be 123.123.123.123 but is: '%v'", remoteUserInfo.Ip)
-	}
-
-	os.Unsetenv("PAM_RHOST")
-}
