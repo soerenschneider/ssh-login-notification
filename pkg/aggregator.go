@@ -65,7 +65,13 @@ func (s *Aggregator) Enrich(login *internal.RemoteUserInfo) {
 
 	if s.options.GeoLookup {
 		ipGeoInfo := <-ipGeoInfoChan
-		login.Geo = *ipGeoInfo
+		if ipGeoInfo != nil {
+			login.Geo = *ipGeoInfo
+
+			if login.Ip == "" && login.Geo.Ip != "" {
+				login.Ip = login.Geo.Ip
+			}
+		}
 	}
 
 	if s.options.DnsLookup && login.Dns == "" {
@@ -73,7 +79,7 @@ func (s *Aggregator) Enrich(login *internal.RemoteUserInfo) {
 	}
 }
 
-func (this *Aggregator) fetchIpInfo(login *internal.RemoteUserInfo, c chan *internal.IpGeoInfo) {
+func (this *Aggregator) fetchIpInfo(login *internal.RemoteUserInfo, channel chan *internal.IpGeoInfo) {
 	host := geo.RemoteHost{}
 	if login.Ip != "" {
 		host.IsIp = true
@@ -82,11 +88,11 @@ func (this *Aggregator) fetchIpInfo(login *internal.RemoteUserInfo, c chan *inte
 		host.Host = login.Dns
 	}
 
-	a, _ := this.geoEnricher.Lookup(&host)
-	c <- a
+	geo, _ := this.geoEnricher.Lookup(&host)
+	channel <- geo
 }
 
-func (this *Aggregator) fetchDns(ip string, c chan string) {
+func (this *Aggregator) fetchDns(ip string, channel chan string) {
 	dns, _ := this.dnsEnricher.DnsLookup(ip)
-	c <- dns
+	channel <- dns
 }
