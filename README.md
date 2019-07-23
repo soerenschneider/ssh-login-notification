@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/gojp/goreportcard)](https://goreportcard.com/report/gojp/goreportcard)
+[![Go Report Card](https://goreportcard.com/report/gitlab.com/soerenschneider/ssh-login-notification](https://goreportcard.com/report/gitlab.com/soerenschneider/ssh-login-notification)
 
 Create a config file in either /etc/default/sshnotification.json or $HOME/.sshnotification/sshnotification.json:
 
