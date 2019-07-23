@@ -11,22 +11,29 @@ import (
 	"sshnot/pkg/scrapers"
 )
 
-type Bot interface {
+// UserNotification is an interface to dispatch the formatted
+// message to the end-user.
+type UserNotification interface {
 	Send(message string) error
 }
 
+// Scraper is an interface that collects the bare information that's
+// available on this system about the remote user.
 type Scraper interface {
 	GetRemoteUserInfo(login *internal.RemoteUserInfo) error
 }
 
+// cortex struct configures all the pluggable components that are used
+// to perform this workload.
 type cortex struct {
-	dispatcher  Bot
+	dispatcher  UserNotification
 	scraper     Scraper
 	geoEnricher GeoEnricher
 	dnsEnricher DnsEnricher
 	options     *internal.Options
 }
 
+// NewCortex initialises this struct.
 func NewCortex(options *internal.Options) *cortex {
 	dispatcher, _ := telegram.NewTelegramBot(options)
 
@@ -39,10 +46,11 @@ func NewCortex(options *internal.Options) *cortex {
 	}
 }
 
-// Run ties all the components together and performs the
-// whole workload.
+// Run performs the whole workload of this program in an nicely
+// abstracted way.
 func (c *cortex) Run() {
 	login := internal.RemoteUserInfo{}
+	login.Host, _ = os.Hostname()
 
 	err := c.scraper.GetRemoteUserInfo(&login)
 	if err == nil {
@@ -52,6 +60,7 @@ func (c *cortex) Run() {
 		aggregator.Enrich(&login)
 	}
 
+	// format the message and dispatch it
 	formatted := formatter.Format(login)
 	err = c.dispatcher.Send(formatted)
 	if err != nil {

@@ -8,10 +8,11 @@ import (
 	"strings"
 )
 
+// EnvScraper collects information about the remote host from
+// all available environment variables.
 type EnvScraper struct {
 }
 
-// readFromEnv reads information to start with from the environment variables
 func (this *EnvScraper) GetRemoteUserInfo(login *internal.RemoteUserInfo) error {
 	extractSuccessful := this.trySshClient(login)
 
@@ -27,6 +28,7 @@ func (this *EnvScraper) GetRemoteUserInfo(login *internal.RemoteUserInfo) error 
 	return err
 }
 
+// trySshClient collects information from the 'SSH_CLIENT' env variable.
 func (this *EnvScraper) trySshClient(login *internal.RemoteUserInfo) bool {
 	sshClient := os.Getenv("SSH_CLIENT")
 	if len(sshClient) > 0 {
@@ -42,6 +44,7 @@ func (this *EnvScraper) trySshClient(login *internal.RemoteUserInfo) bool {
 	return false
 }
 
+// tryPam collects information from the 'PAM_USER' and 'PAM_RHOST' variables.
 func (this *EnvScraper) tryPam(login *internal.RemoteUserInfo) bool {
 	if !this.isSessionOpened() {
 		return false
@@ -53,6 +56,9 @@ func (this *EnvScraper) tryPam(login *internal.RemoteUserInfo) bool {
 		return false
 	}
 
+	// On some systems this may be either a hostname or an IP.
+	// Try to parse as IP, if it doesn't work it's most likely
+	// the reverse dns for the host.
 	ip := net.ParseIP(rhost)
 	if nil == ip {
 		login.Dns = rhost

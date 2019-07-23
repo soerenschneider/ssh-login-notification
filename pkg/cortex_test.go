@@ -22,7 +22,7 @@ func Test_cortex_Run(t *testing.T) {
 
 	telegramMock, _ := telegram.NewTelegramMock(options)
 	cortex.dispatcher = telegramMock
-	telegramMock.On("Send", "New login on work for soeren from 1.1.1.1 (reverse, Org, ISP) City, Region, Country").Return(nil)
+	telegramMock.On("Send", "New login on test for soeren from 1.1.1.1 (reverse, Org, ISP) City, Region, Country").Return(nil)
 
 	cortex.Run()
 	telegramMock.AssertExpectations(t)

@@ -2,23 +2,26 @@ package pkg
 
 import (
 	log "github.com/sirupsen/logrus"
-	"os"
 	"sshnot/internal"
 	"sshnot/pkg/enrichers/geo"
 )
 
+// Aggregator accepts information about the connecting remote host and
+// enriches that data with pluggable providers.
 type Aggregator struct {
 	geoEnricher GeoEnricher
 	dnsEnricher DnsEnricher
 	options     *internal.Options
 }
 
-// GeoEnricher is used to perform dns lookups.
+// GeoEnricher is used to perform lookups on the host in order
+// to get geo information.
 type GeoEnricher interface {
 	Lookup(host *geo.RemoteHost) (*internal.IpGeoInfo, error)
 }
 
-// DnsEnricher is used to perform dns lookups.
+// DnsEnricher is used to perform dns lookups on the host in order
+// to get dns information about the host.
 type DnsEnricher interface {
 	DnsLookup(ip string) (string, error)
 	IpLookup(dns string) (string, error)
@@ -36,12 +39,12 @@ func NewAggregator(options *internal.Options, geoProvider GeoEnricher, dnsProvid
 	return &this
 }
 
+// Enrich accepts the remote user information and enriches it using the
+// configured providers.
 func (s *Aggregator) Enrich(login *internal.RemoteUserInfo) {
 	if nil == login {
 		return
 	}
-
-	login.Host, _ = os.Hostname()
 
 	if login.Ip == "" && login.Dns == "" {
 		log.Panic("Everything empty")
