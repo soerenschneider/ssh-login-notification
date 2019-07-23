@@ -13,3 +13,6 @@ integrationtest: mountebank
 
 clean:
 	podman rm -f sshnotmountebank || true
+
+build:
+	go build

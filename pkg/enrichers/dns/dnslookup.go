@@ -1,4 +1,4 @@
-package enrichers
+package dns
 
 import (
 	"context"
@@ -6,8 +6,11 @@ import (
 	"time"
 )
 
+type DnsProvider struct {
+}
+
 // DnsLookup accepts an ip address and performs a reverse dns lookup.
-func DnsLookup(ip string) (string, error) {
+func (this *DnsProvider) DnsLookup(ip string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 1*time.Second)
 	// avoid resource leaks
 	defer cancel()
@@ -23,7 +26,7 @@ func DnsLookup(ip string) (string, error) {
 
 // IpLookup accepts a hostname and performs a dns lookup to resolve its ip
 // address.
-func IpLookup(dns string) (string, error) {
+func (this *DnsProvider) IpLookup(dns string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 3*time.Second)
 	// avoid resource leaks
 	defer cancel()

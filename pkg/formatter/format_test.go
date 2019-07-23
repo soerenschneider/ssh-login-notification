@@ -7,7 +7,7 @@ import (
 )
 
 func TestFormatFull(t *testing.T) {
-	scrape := internal.SshLoginNotification{}
+	scrape := internal.RemoteUserInfo{}
 	scrape.Dns = "dns.tld"
 	scrape.Host = "thishost"
 	scrape.Ip = "8.8.8.8"
@@ -28,7 +28,7 @@ func TestFormatFull(t *testing.T) {
 }
 
 func TestFormatGeo(t *testing.T) {
-	scrape := internal.SshLoginNotification{}
+	scrape := internal.RemoteUserInfo{}
 	scrape.Host = "thishost"
 	scrape.Ip = "8.8.8.8"
 	scrape.User = "soeren"
@@ -45,7 +45,7 @@ func TestFormatGeo(t *testing.T) {
 }
 
 func TestFormatNoDnsNoIsp(t *testing.T) {
-	scrape := internal.SshLoginNotification{}
+	scrape := internal.RemoteUserInfo{}
 	scrape.Host = "thishost"
 	scrape.Ip = "8.8.8.8"
 	scrape.User = "soeren"
@@ -63,7 +63,7 @@ func TestFormatNoDnsNoIsp(t *testing.T) {
 }
 
 func TestFormatNoLocation(t *testing.T) {
-	scrape := internal.SshLoginNotification{}
+	scrape := internal.RemoteUserInfo{}
 	scrape.Host = "thishost"
 	scrape.Ip = "8.8.8.8"
 	scrape.User = "soeren"
@@ -78,7 +78,7 @@ func TestFormatNoLocation(t *testing.T) {
 }
 
 func TestFormatBare(t *testing.T) {
-	scrape := internal.SshLoginNotification{}
+	scrape := internal.RemoteUserInfo{}
 	scrape.Host = "thishost"
 	scrape.Ip = "8.8.8.8"
 	scrape.User = "soeren"

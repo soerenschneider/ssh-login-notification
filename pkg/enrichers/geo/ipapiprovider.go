@@ -25,11 +25,11 @@ func NewProviderIpApi(url ...string) *geoProviderIpApi {
 	return &geoProviderIpApi{url: endpoint}
 }
 
-func (p *geoProviderIpApi) Lookup(ip string) (*internal.IpGeoInfo, error) {
+func (p *geoProviderIpApi) Lookup(remoteHost *RemoteHost) (*internal.IpGeoInfo, error) {
 	timeout := time.Duration(2 * time.Second)
 	client := http.Client{Timeout: timeout}
 
-	resp, err := client.Get(fmt.Sprintf(p.url, ip))
+	resp, err := client.Get(fmt.Sprintf(p.url, remoteHost.Host))
 	if err != nil {
 		return nil, err
 	}

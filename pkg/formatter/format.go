@@ -14,7 +14,7 @@ const (
 
 // Format accepts a struct containing the scraped ip information and
 // templates to return the final message string.
-func Format(a internal.SshLoginNotification) string {
+func Format(a internal.RemoteUserInfo) string {
 	t, err := template.New(templateName).Parse(templ)
 	if err != nil {
 		log.Panicf("Template is faulty: %v", err)

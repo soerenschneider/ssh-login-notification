@@ -39,7 +39,7 @@ func FireUp() *cobra.Command {
 
 	main.Run = func(cmd *cobra.Command, args []string) {
 		options := parseOptions(main)
-		pkg.Cortex(&options)
+		pkg.NewCortex(&options).Run()
 	}
 
 	return main
