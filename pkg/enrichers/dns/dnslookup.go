@@ -6,11 +6,13 @@ import (
 	"time"
 )
 
-type DnsProvider struct {
+// DnsEnricher provides host enriching host information based on
+// DNS lookups.
+type DnsEnricher struct {
 }
 
 // DnsLookup accepts an ip address and performs a reverse dns lookup.
-func (this *DnsProvider) DnsLookup(ip string) (string, error) {
+func (this *DnsEnricher) DnsLookup(ip string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 1*time.Second)
 	// avoid resource leaks
 	defer cancel()
@@ -26,7 +28,7 @@ func (this *DnsProvider) DnsLookup(ip string) (string, error) {
 
 // IpLookup accepts a hostname and performs a dns lookup to resolve its ip
 // address.
-func (this *DnsProvider) IpLookup(dns string) (string, error) {
+func (this *DnsEnricher) IpLookup(dns string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 3*time.Second)
 	// avoid resource leaks
 	defer cancel()

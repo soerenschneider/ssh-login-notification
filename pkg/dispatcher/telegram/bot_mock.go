@@ -2,19 +2,14 @@ package telegram
 
 import (
 	"github.com/stretchr/testify/mock"
-	"sshnot/internal"
 )
 
-type telegramMock struct {
+// MockDispatcher is a mocked dispatcher.
+type MockDispatcher struct {
 	mock.Mock
-	receiver int64
 }
 
-func NewTelegramMock(option *internal.Options) (*telegramMock, error) {
-	return &telegramMock{receiver: option.TelegramId}, nil
-}
-
-func (b *telegramMock) Send(message string) error {
-	args := b.Called(message)
+func (m *MockDispatcher) Send(message string) error {
+	args := m.Called(message)
 	return args.Error(0)
 }

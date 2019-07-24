@@ -1,5 +1,6 @@
 package dns
 
+// DnsDummyProvider is a mock that fulfills the DNS enricher interface.
 type DnsDummyProvider struct {
 }
 

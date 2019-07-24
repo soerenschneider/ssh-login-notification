@@ -41,7 +41,7 @@ func NewCortex(options *internal.Options) *cortex {
 		dispatcher:  dispatcher,
 		scraper:     &scrapers.EnvScraper{},
 		geoEnricher: geo.NewProviderIpApi(),
-		dnsEnricher: &dns.DnsProvider{},
+		dnsEnricher: &dns.DnsEnricher{},
 		options:     options,
 	}
 }

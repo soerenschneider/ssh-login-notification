@@ -16,7 +16,7 @@ func TestScrapeIpV6(t *testing.T) {
 	err := scraper.GetRemoteUserInfo(&remoteUserInfo)
 
 	if err != nil {
-		t.Error("Error occured")
+		t.Error("Error occurred")
 	}
 
 	if remoteUserInfo.Ip != "::1" {
@@ -35,7 +35,7 @@ func TestScrapeIpV4(t *testing.T) {
 	err := scraper.GetRemoteUserInfo(&remoteUserInfo)
 
 	if err != nil {
-		t.Error("Error occured")
+		t.Error("Error occurred")
 	}
 
 	if remoteUserInfo.Ip != "123.123.123.123" {
