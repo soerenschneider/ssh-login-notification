@@ -22,7 +22,7 @@ func (scraper *EnvScraper) GetRemoteUserInfo(login *internal.RemoteUserInfo) err
 		extractSuccessful = scraper.tryPam(login)
 	}
 
-	var err error = nil
+	var err error
 	if !extractSuccessful {
 		err = errors.New("No info found in SSH_CLIENT and PAM_RHOST")
 	}
