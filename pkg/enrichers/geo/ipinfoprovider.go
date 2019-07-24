@@ -10,16 +10,16 @@ import (
 )
 
 type geoProviderIpInfo struct {
-	dnsProvider DnsProvider
+	dnsProvider dnsProvider
 }
 
-type DnsProvider interface {
+type dnsProvider interface {
 	IpLookup(dns string) (string, error)
 }
 
 // NewGeoProviderIpInfo instantiates a new ip geo provider
 // that queries ipinfo.io.
-func NewGeoProviderIpInfo(dnsProvider *DnsProvider) *geoProviderIpInfo {
+func NewGeoProviderIpInfo(dnsProvider *dnsProvider) *geoProviderIpInfo {
 	return &geoProviderIpInfo{dnsProvider: *dnsProvider}
 }
 
