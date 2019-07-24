@@ -18,7 +18,7 @@ func Test_cortex_Run(t *testing.T) {
 	scraper := &scrapers.DummyIpScraper{}
 	cortex.scraper = scraper
 	cortex.dnsEnricher = &dns.DnsDummyProvider{}
-	cortex.geoEnricher = &geo.GeoDummyProvider{}
+	cortex.geoEnricher = &geo.GeoDummyEnricher{}
 
 	telegramMock, _ := telegram.NewTelegramMock(options)
 	cortex.dispatcher = telegramMock

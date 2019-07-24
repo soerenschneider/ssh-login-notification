@@ -2,10 +2,13 @@ package geo
 
 import "sshnot/internal"
 
-type GeoDummyProvider struct {
+// GeoDummyEnricher is a dummy that delivers fixed data for an arbitrary host.
+type GeoDummyEnricher struct {
 }
 
-func (p *GeoDummyProvider) Lookup(host *RemoteHost) (*internal.IpGeoInfo, error) {
+// Lookup performs a lookup on a remote host to gather geo information about the
+// appropriate host.
+func (p *GeoDummyEnricher) Lookup(host *RemoteHost) (*internal.IpGeoInfo, error) {
 	info := internal.IpGeoInfo{}
 
 	info.Isp = "ISP"

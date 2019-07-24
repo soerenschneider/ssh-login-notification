@@ -13,6 +13,8 @@ import (
 type EnvScraper struct {
 }
 
+// GetRemoteUserInfo scrapes all available information about the remote host and writes
+// it into supplied login object.
 func (this *EnvScraper) GetRemoteUserInfo(login *internal.RemoteUserInfo) error {
 	extractSuccessful := this.trySshClient(login)
 

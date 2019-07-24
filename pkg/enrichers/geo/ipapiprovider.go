@@ -25,6 +25,8 @@ func NewProviderIpApi(url ...string) *geoProviderIpApi {
 	return &geoProviderIpApi{url: endpoint}
 }
 
+// Lookup performs a lookup on a remote host to gather geo information about the
+// appropriate host.
 func (p *geoProviderIpApi) Lookup(remoteHost *RemoteHost) (*internal.IpGeoInfo, error) {
 	timeout := time.Duration(2 * time.Second)
 	client := http.Client{Timeout: timeout}

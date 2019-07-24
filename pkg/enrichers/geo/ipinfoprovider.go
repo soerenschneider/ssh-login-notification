@@ -30,6 +30,8 @@ func (p *geoProviderIpInfo) getIp(remoteHost *RemoteHost) (string, error) {
 	return p.dnsProvider.IpLookup(remoteHost.Host)
 }
 
+// Lookup performs a lookup on a remote host to gather geo information about the
+// appropriate host.
 func (p *geoProviderIpInfo) Lookup(remoteHost *RemoteHost) (*internal.IpGeoInfo, error) {
 	timeout := time.Duration(2 * time.Second)
 	client := http.Client{Timeout: timeout}
