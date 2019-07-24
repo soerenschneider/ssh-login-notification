@@ -24,7 +24,7 @@ type GeoEnricher interface {
 // to get dns information about the host.
 type DnsEnricher interface {
 	DnsLookup(ip string) (string, error)
-	IpLookup(dns string) (string, error)
+	ResolveIp(dns string) (string, error)
 }
 
 // NewAggregator instantiates a new struct and scrapes the providers

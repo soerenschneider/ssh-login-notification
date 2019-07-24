@@ -26,9 +26,9 @@ func (this *DnsEnricher) DnsLookup(ip string) (string, error) {
 	return "", err
 }
 
-// IpLookup accepts a hostname and performs a dns lookup to resolve its ip
+// ResolveIp accepts a hostname and performs a dns lookup to resolve its ip
 // address.
-func (this *DnsEnricher) IpLookup(dns string) (string, error) {
+func (this *DnsEnricher) ResolveIp(dns string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 3*time.Second)
 	// avoid resource leaks
 	defer cancel()

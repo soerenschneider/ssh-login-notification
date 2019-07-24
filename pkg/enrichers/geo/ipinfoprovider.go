@@ -14,11 +14,15 @@ type geoProviderIpInfo struct {
 }
 
 type dnsProvider interface {
-	IpLookup(dns string) (string, error)
+	ResolveIp(dns string) (string, error)
 }
 
 // NewGeoProviderIpInfo instantiates a new ip geo provider
-// that queries ipinfo.io.
+// that queries ipinfo.io. Given the facts that we may only
+// be able to acquire DNS data for the remote host and that
+// ipinfo's API does only work with IP data, we need a DNS
+// provider, so that we can resolve the IP address if the
+// remote host is indeed only a hostname.
 func NewGeoProviderIpInfo(dnsProvider *dnsProvider) *geoProviderIpInfo {
 	return &geoProviderIpInfo{dnsProvider: *dnsProvider}
 }
@@ -27,7 +31,7 @@ func (p *geoProviderIpInfo) getIp(remoteHost *RemoteHost) (string, error) {
 	if remoteHost.IsIp {
 		return remoteHost.Host, nil
 	}
-	return p.dnsProvider.IpLookup(remoteHost.Host)
+	return p.dnsProvider.ResolveIp(remoteHost.Host)
 }
 
 // Lookup performs a lookup on a remote host to gather geo information about the
