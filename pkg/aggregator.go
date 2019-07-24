@@ -41,7 +41,7 @@ func NewAggregator(options *internal.Options, geoProvider GeoEnricher, dnsProvid
 
 // Enrich accepts the remote user information and enriches it using the
 // configured providers.
-func (s *Aggregator) Enrich(login *internal.RemoteUserInfo) {
+func (agg *Aggregator) Enrich(login *internal.RemoteUserInfo) {
 	if nil == login {
 		return
 	}
@@ -55,15 +55,15 @@ func (s *Aggregator) Enrich(login *internal.RemoteUserInfo) {
 	defer close(ipGeoInfoChan)
 	defer close(dnsChan)
 
-	if s.options.GeoLookup {
-		go s.fetchIpInfo(login, ipGeoInfoChan)
+	if agg.options.GeoLookup {
+		go agg.fetchIpInfo(login, ipGeoInfoChan)
 	}
 
-	if s.options.DnsLookup && login.Dns == "" {
-		go s.fetchDns(login.Ip, dnsChan)
+	if agg.options.DnsLookup && login.Dns == "" {
+		go agg.fetchDns(login.Ip, dnsChan)
 	}
 
-	if s.options.GeoLookup {
+	if agg.options.GeoLookup {
 		ipGeoInfo := <-ipGeoInfoChan
 		if ipGeoInfo != nil {
 			login.Geo = *ipGeoInfo
@@ -74,12 +74,12 @@ func (s *Aggregator) Enrich(login *internal.RemoteUserInfo) {
 		}
 	}
 
-	if s.options.DnsLookup && login.Dns == "" {
+	if agg.options.DnsLookup && login.Dns == "" {
 		login.Dns, _ = <-dnsChan
 	}
 }
 
-func (this *Aggregator) fetchIpInfo(login *internal.RemoteUserInfo, channel chan *internal.IpGeoInfo) {
+func (agg *Aggregator) fetchIpInfo(login *internal.RemoteUserInfo, channel chan *internal.IpGeoInfo) {
 	host := geo.RemoteHost{}
 	if login.Ip != "" {
 		host.IsIp = true
@@ -88,11 +88,11 @@ func (this *Aggregator) fetchIpInfo(login *internal.RemoteUserInfo, channel chan
 		host.Host = login.Dns
 	}
 
-	geo, _ := this.geoEnricher.Lookup(&host)
+	geo, _ := agg.geoEnricher.Lookup(&host)
 	channel <- geo
 }
 
-func (this *Aggregator) fetchDns(ip string, channel chan string) {
-	dns, _ := this.dnsEnricher.DnsLookup(ip)
+func (agg *Aggregator) fetchDns(ip string, channel chan string) {
+	dns, _ := agg.dnsEnricher.DnsLookup(ip)
 	channel <- dns
 }

@@ -8,7 +8,7 @@ type GeoDummyEnricher struct {
 
 // Lookup performs a lookup on a remote host to gather geo information about the
 // appropriate host.
-func (p *GeoDummyEnricher) Lookup(host *RemoteHost) (*internal.IpGeoInfo, error) {
+func (enricher *GeoDummyEnricher) Lookup(host *RemoteHost) (*internal.IpGeoInfo, error) {
 	info := internal.IpGeoInfo{}
 
 	info.Isp = "ISP"
