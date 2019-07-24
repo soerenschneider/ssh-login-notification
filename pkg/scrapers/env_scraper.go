@@ -15,11 +15,11 @@ type EnvScraper struct {
 
 // GetRemoteUserInfo scrapes all available information about the remote host and writes
 // it into supplied login object.
-func (this *EnvScraper) GetRemoteUserInfo(login *internal.RemoteUserInfo) error {
-	extractSuccessful := this.trySshClient(login)
+func (scraper *EnvScraper) GetRemoteUserInfo(login *internal.RemoteUserInfo) error {
+	extractSuccessful := scraper.trySshClient(login)
 
 	if !extractSuccessful {
-		extractSuccessful = this.tryPam(login)
+		extractSuccessful = scraper.tryPam(login)
 	}
 
 	var err error = nil
@@ -31,7 +31,7 @@ func (this *EnvScraper) GetRemoteUserInfo(login *internal.RemoteUserInfo) error 
 }
 
 // trySshClient collects information from the 'SSH_CLIENT' env variable.
-func (this *EnvScraper) trySshClient(login *internal.RemoteUserInfo) bool {
+func (scraper *EnvScraper) trySshClient(login *internal.RemoteUserInfo) bool {
 	sshClient := os.Getenv("SSH_CLIENT")
 	if len(sshClient) > 0 {
 		split := strings.Split(sshClient, " ")
@@ -47,8 +47,8 @@ func (this *EnvScraper) trySshClient(login *internal.RemoteUserInfo) bool {
 }
 
 // tryPam collects information from the 'PAM_USER' and 'PAM_RHOST' variables.
-func (this *EnvScraper) tryPam(login *internal.RemoteUserInfo) bool {
-	if !this.isSessionOpened() {
+func (scraper *EnvScraper) tryPam(login *internal.RemoteUserInfo) bool {
+	if !scraper.isSessionOpened() {
 		return false
 	}
 
@@ -73,7 +73,7 @@ func (this *EnvScraper) tryPam(login *internal.RemoteUserInfo) bool {
 
 // isSessionOpened checks whether the correct PAM event has happened
 // for out notification script.
-func (this *EnvScraper) isSessionOpened() bool {
+func (scraper *EnvScraper) isSessionOpened() bool {
 	event := os.Getenv("PAM_TYPE")
 	// We are only interested in the "open_session" event. If we don't
 	// distinct this, it's possible that messages are being send on

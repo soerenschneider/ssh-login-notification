@@ -12,7 +12,7 @@ type DnsEnricher struct {
 }
 
 // DnsLookup accepts an ip address and performs a reverse dns lookup.
-func (this *DnsEnricher) DnsLookup(ip string) (string, error) {
+func (enricher *DnsEnricher) DnsLookup(ip string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 1*time.Second)
 	// avoid resource leaks
 	defer cancel()
@@ -28,7 +28,7 @@ func (this *DnsEnricher) DnsLookup(ip string) (string, error) {
 
 // ResolveIp accepts a hostname and performs a dns lookup to resolve its ip
 // address.
-func (this *DnsEnricher) ResolveIp(dns string) (string, error) {
+func (enricher *DnsEnricher) ResolveIp(dns string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.TODO(), 3*time.Second)
 	// avoid resource leaks
 	defer cancel()
