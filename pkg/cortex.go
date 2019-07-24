@@ -18,7 +18,8 @@ type UserNotification interface {
 }
 
 // Scraper is an interface that collects the bare information that's
-// available on this system about the remote user.
+// available on this system about the remote user. If an error is
+// returned, the script will not continue.
 type Scraper interface {
 	GetRemoteUserInfo(login *internal.RemoteUserInfo) error
 }
@@ -36,7 +37,6 @@ type cortex struct {
 // NewCortex initialises this struct.
 func NewCortex(options *internal.Options) *cortex {
 	dispatcher, _ := telegram.NewTelegramBot(options)
-
 	return &cortex{
 		dispatcher:  dispatcher,
 		scraper:     &scrapers.EnvScraper{},
@@ -53,12 +53,14 @@ func (c *cortex) Run() {
 	login.Host, _ = os.Hostname()
 
 	err := c.scraper.GetRemoteUserInfo(&login)
-	if err == nil {
-		// If no error occurred while getting remote user info, enrich the
-		// information by performing lookups.
-		aggregator := NewAggregator(c.options, c.geoEnricher, c.dnsEnricher)
-		aggregator.Enrich(&login)
+	if err != nil {
+		return
 	}
+
+	// If no error occurred while getting remote user info, enrich the
+	// information by performing lookups.
+	aggregator := NewAggregator(c.options, c.geoEnricher, c.dnsEnricher)
+	aggregator.Enrich(&login)
 
 	// format the message and dispatch it
 	formatted := formatter.Format(login)
