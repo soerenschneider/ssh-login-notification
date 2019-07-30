@@ -20,8 +20,8 @@ func Test_cortex_Run(t *testing.T) {
 	cortex.dnsEnricher = &dns.DnsDummyProvider{}
 	cortex.geoEnricher = &geo.GeoDummyEnricher{}
 
-	telegramMock, _ := telegram.NewTelegramMock(options)
-	cortex.dispatcher = telegramMock
+	telegramMock := telegram.MockDispatcher{}
+	cortex.dispatcher = &telegramMock
 	telegramMock.On("Send", "New login on test for soeren from 1.1.1.1 (reverse, Org, ISP) City, Region, Country").Return(nil)
 
 	cortex.Run()
