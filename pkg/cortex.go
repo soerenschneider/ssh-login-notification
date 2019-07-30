@@ -57,10 +57,13 @@ func (c *cortex) Run() {
 		return
 	}
 
-	// If no error occurred while getting remote user info, enrich the
-	// information by performing lookups.
-	aggregator := NewAggregator(c.options, c.geoEnricher, c.dnsEnricher)
-	aggregator.Enrich(&login)
+	isPrivateIp, _ := login.IsPrivateIP()
+	if !isPrivateIp {
+		// If no error occurred while getting remote user info, enrich the
+		// information by performing lookups.
+		aggregator := NewAggregator(c.options, c.geoEnricher, c.dnsEnricher)
+		aggregator.Enrich(&login)
+	}
 
 	// format the message and dispatch it
 	formatted := formatter.Format(login)
