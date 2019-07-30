@@ -1,8 +1,12 @@
 package internal
 
 import (
+	"errors"
+	"net"
 	"strings"
 )
+
+var privateIPBlocks []*net.IPNet
 
 // RemoteUserInfo contains the gathered information about
 // a SSH login.
@@ -12,6 +16,38 @@ type RemoteUserInfo struct {
 	User string
 	Dns  string
 	Geo  IpGeoInfo
+}
+
+func init() {
+	for _, cidr := range []string{
+		"127.0.0.0/8",    // IPv4 loopback
+		"10.0.0.0/8",     // RFC1918
+		"172.16.0.0/12",  // RFC1918
+		"192.168.0.0/16", // RFC1918
+		"::1/128",        // IPv6 loopback
+		"fe80::/10",      // IPv6 link-local
+		"fc00::/7",       // IPv6 unique local addr
+	} {
+		_, block, _ := net.ParseCIDR(cidr)
+		privateIPBlocks = append(privateIPBlocks, block)
+	}
+}
+
+// IsPrivateIP returns whether the login comes from a private
+// network or not.
+func (s *RemoteUserInfo) IsPrivateIP() (bool, error) {
+	ip := net.ParseIP(s.Ip)
+
+	if ip == nil {
+		return false, errors.New("can't parse IP")
+	}
+
+	for _, block := range privateIPBlocks {
+		if block.Contains(ip) {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
 // PrettyPrintLocation returns a comma separated string of the
