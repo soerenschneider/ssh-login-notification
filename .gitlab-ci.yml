@@ -12,7 +12,7 @@ test:unit:
 test:integration:
   stage: test
   services:
-  - name: registry.gitlab.com/soerenschneider/mountebank-docker
+  - name: registry.gitlab.com/soerenschneider/mountebank-docker:2.1.0
     alias: mountebank
   script:
   - apk add --update build-base curl
