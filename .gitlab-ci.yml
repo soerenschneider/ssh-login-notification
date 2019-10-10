@@ -8,3 +8,12 @@ test:unit:
   script:
   - apk add --update build-base
   - make unittest
+
+test:integration:
+  stage: test
+  services:
+  - registry.gitlab.com/soerenschneider/mountebank-docker
+  script:
+  - apk add --update build-base curl
+  - curl -X POST --data @mountebank/ip-api.json mountebank-docker:2525/imposters
+  - make integrationtest
