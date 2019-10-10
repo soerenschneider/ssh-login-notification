@@ -12,7 +12,7 @@ func Test_geoProviderIpApi_Lookup_Empty(t *testing.T) {
 
 	provider := NewProviderIpApi(url)
 
-	_, err := provider.Lookup("")
+	_, err := provider.Lookup(&RemoteHost{Host: ""})
 	if err == nil {
 		assert.FailNowf(t, "Expected error", err.Error())
 	}
@@ -23,7 +23,7 @@ func Test_geoProviderIpApi_Lookup_Invalid(t *testing.T) {
 
 	provider := NewProviderIpApi(url)
 
-	r, err := provider.Lookup("0.0.0.0")
+	r, err := provider.Lookup(&RemoteHost{Host: "0.0.0.0", IsIp: true})
 	if err != nil {
 		assert.FailNowf(t, "Error", err.Error())
 	}
@@ -38,7 +38,7 @@ func Test_geoProviderIpApi_Lookup_Basic(t *testing.T) {
 
 	provider := NewProviderIpApi(url)
 
-	r, err := provider.Lookup("1.1.1.1")
+	r, err := provider.Lookup(&RemoteHost{Host: "1.1.1.1", IsIp: true})
 	if err != nil {
 		assert.FailNowf(t, "Error", err.Error())
 	}
