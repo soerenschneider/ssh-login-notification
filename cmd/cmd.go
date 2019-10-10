@@ -45,8 +45,7 @@ func FireUp() *cobra.Command {
 	return main
 }
 
-// parseOptions converts the parsed options to the internally
-// used Options struct.
+// parseOptions converts the parsed options to the internally used Options struct.
 func parseOptions(cmd *cobra.Command) internal.Options {
 	options := internal.Options{}
 

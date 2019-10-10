@@ -8,8 +8,7 @@ import (
 
 var privateIPBlocks []*net.IPNet
 
-// RemoteUserInfo contains the gathered information about
-// a SSH login.
+// RemoteUserInfo contains the gathered information about a SSH login.
 type RemoteUserInfo struct {
 	Ip   string
 	Host string

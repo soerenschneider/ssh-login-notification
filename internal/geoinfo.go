@@ -1,7 +1,6 @@
 package internal
 
-// IpGeoInfo contains all the information that was gathered about
-// a IP.
+// IpGeoInfo contains all the information that was gathered about a IP.
 type IpGeoInfo struct {
 	Ip      string `json:"query,omitempty"`
 	City    string `json:"city,omitempty"`
