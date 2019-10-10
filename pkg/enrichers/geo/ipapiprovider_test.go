@@ -8,7 +8,7 @@ import (
 )
 
 func Test_geoProviderIpApi_Lookup_Empty(t *testing.T) {
-	url := "http://localhost:8080/json/%v"
+	url := "http://mountebank:8080/json/%v"
 
 	provider := NewProviderIpApi(url)
 
@@ -19,7 +19,7 @@ func Test_geoProviderIpApi_Lookup_Empty(t *testing.T) {
 }
 
 func Test_geoProviderIpApi_Lookup_Invalid(t *testing.T) {
-	url := "http://localhost:8080/json/%v"
+	url := "http://mountebank:8080/json/%v"
 
 	provider := NewProviderIpApi(url)
 
@@ -34,7 +34,7 @@ func Test_geoProviderIpApi_Lookup_Invalid(t *testing.T) {
 }
 
 func Test_geoProviderIpApi_Lookup_Basic(t *testing.T) {
-	url := "http://localhost:8080/json/%v"
+	url := "http://mountebank:8080/json/%v"
 
 	provider := NewProviderIpApi(url)
 
