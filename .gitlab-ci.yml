@@ -1,0 +1,9 @@
+stages:
+  - test
+
+image: golang:1.13-alpine
+
+test:unit:
+  stage: test
+  script:
+  - make unittest
