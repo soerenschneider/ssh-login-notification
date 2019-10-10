@@ -6,5 +6,5 @@ image: golang:1.13-alpine
 test:unit:
   stage: test
   script:
-  - apk add --update make
+  - apk add --update build-base
   - make unittest
