@@ -14,6 +14,8 @@ test:integration:
   services:
   - name: registry.gitlab.com/soerenschneider/mountebank-docker
     alias: mountebank
+  variables:
+    SSHNOT_MOUNTEBANK: mountebank
   script:
   - apk add --update build-base curl
   - curl -X POST --data @mountebank/ip-api.json mountebank:2525/imposters
