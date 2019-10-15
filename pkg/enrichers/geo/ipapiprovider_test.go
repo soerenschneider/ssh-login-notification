@@ -5,10 +5,18 @@ package geo
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+    "os"
 )
 
+func getUrl() string {
+    if value, ok := os.LookupEnv("SSHNOT_MOUNTEBANK"); ok {
+        return value
+    }
+    return "localhost:8080"
+}
+
 func Test_geoProviderIpApi_Lookup_Empty(t *testing.T) {
-	url := "http://mountebank:8080/json/%v"
+    url := "http://" + getUrl() + "/json/%v"
 
 	provider := NewProviderIpApi(url)
 
@@ -19,7 +27,7 @@ func Test_geoProviderIpApi_Lookup_Empty(t *testing.T) {
 }
 
 func Test_geoProviderIpApi_Lookup_Invalid(t *testing.T) {
-	url := "http://mountebank:8080/json/%v"
+    url := "http://" + getUrl() + "/json/%v"
 
 	provider := NewProviderIpApi(url)
 
@@ -34,7 +42,7 @@ func Test_geoProviderIpApi_Lookup_Invalid(t *testing.T) {
 }
 
 func Test_geoProviderIpApi_Lookup_Basic(t *testing.T) {
-	url := "http://mountebank:8080/json/%v"
+    url := "http://" + getUrl() + "/json/%v"
 
 	provider := NewProviderIpApi(url)
 
