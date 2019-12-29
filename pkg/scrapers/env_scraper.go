@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net"
 	"os"
-	"sshnot/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
 	"strings"
 )
 

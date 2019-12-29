@@ -1,6 +1,6 @@
-module sshnot
+module gitlab.com/soerenschneider/ssh-login-notification
 
-go 1.12
+go 1.13
 
 require (
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible

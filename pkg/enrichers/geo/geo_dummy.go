@@ -1,6 +1,6 @@
 package geo
 
-import "sshnot/internal"
+import "gitlab.com/soerenschneider/ssh-login-notification/internal"
 
 // GeoDummyEnricher is a dummy that delivers fixed data for an arbitrary host.
 type GeoDummyEnricher struct {

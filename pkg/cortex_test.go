@@ -1,11 +1,11 @@
 package pkg
 
 import (
-	"sshnot/internal"
-	"sshnot/pkg/dispatcher/telegram"
-	"sshnot/pkg/enrichers/dns"
-	"sshnot/pkg/enrichers/geo"
-	"sshnot/pkg/scrapers"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/pkg/dispatcher/telegram"
+	"gitlab.com/soerenschneider/ssh-login-notification/pkg/enrichers/dns"
+	"gitlab.com/soerenschneider/ssh-login-notification/pkg/enrichers/geo"
+	"gitlab.com/soerenschneider/ssh-login-notification/pkg/scrapers"
 	"testing"
 )
 

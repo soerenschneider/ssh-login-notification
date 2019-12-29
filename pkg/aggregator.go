@@ -2,8 +2,8 @@ package pkg
 
 import (
 	log "github.com/sirupsen/logrus"
-	"sshnot/internal"
-	"sshnot/pkg/enrichers/geo"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/pkg/enrichers/geo"
 )
 
 // Aggregator accepts information about the connecting remote host and

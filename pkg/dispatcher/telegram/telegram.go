@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/prometheus/common/log"
-	"sshnot/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
 )
 
 type telegramBot struct {

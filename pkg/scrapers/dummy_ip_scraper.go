@@ -1,6 +1,6 @@
 package scrapers
 
-import "sshnot/internal"
+import "gitlab.com/soerenschneider/ssh-login-notification/internal"
 
 // DummyIpScraper is a dummy that provides static data.
 type DummyIpScraper struct {

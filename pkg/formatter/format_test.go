@@ -2,7 +2,7 @@ package formatter
 
 import (
 	"fmt"
-	"sshnot/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
 	"testing"
 )
 

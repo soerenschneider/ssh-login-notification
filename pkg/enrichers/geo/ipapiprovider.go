@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"sshnot/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
 	"time"
 )
 

@@ -3,7 +3,7 @@ package formatter
 import (
 	"bytes"
 	log "github.com/sirupsen/logrus"
-	"sshnot/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
 	"text/template"
 )
 

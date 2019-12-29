@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"sshnot/cmd"
+	"gitlab.com/soerenschneider/ssh-login-notification/cmd"
 )
 
 func main() {

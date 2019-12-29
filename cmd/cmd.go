@@ -4,8 +4,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"sshnot/internal"
-	"sshnot/pkg"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/pkg"
 	"strings"
 )
 
@@ -19,9 +19,9 @@ const (
 // FireUp parses the user supplied input and starts this whole mess.
 func FireUp() *cobra.Command {
 	viper.AutomaticEnv()
-	viper.SetConfigName("sshnotification")
+	viper.SetConfigName("gitlab.com/soerenschneider/ssh-login-notificationification")
 	viper.AddConfigPath("/etc/default")
-	viper.AddConfigPath("$HOME/.sshnotification")
+	viper.AddConfigPath("$HOME/.gitlab.com/soerenschneider/ssh-login-notificationification")
 
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -29,7 +29,7 @@ func FireUp() *cobra.Command {
 	}
 
 	main := &cobra.Command{
-		Use: "sshnotification",
+		Use: "gitlab.com/soerenschneider/ssh-login-notificationification",
 	}
 
 	main.Flags().BoolP(nogeoresolv, "g", viper.GetBool(strings.Replace(nogeoresolv, "-", "_", -1)), "Do NOT lookup ip geo information")

@@ -2,8 +2,8 @@ package pkg
 
 import (
 	"os"
-	"sshnot/internal"
-	"sshnot/pkg/scrapers"
+	"gitlab.com/soerenschneider/ssh-login-notification/internal"
+	"gitlab.com/soerenschneider/ssh-login-notification/pkg/scrapers"
 	"testing"
 )
 
