@@ -58,14 +58,15 @@ func (c *cortex) Run() {
 	}
 
 	isPrivateIp, _ := login.IsPrivateIP()
+	if isPrivateIp && c.options.IgnorePrivateIps {
+		return
+	}
+
 	if !isPrivateIp {
-		// If no error occurred while getting remote user info, enrich the
-		// information by performing lookups.
 		aggregator := NewAggregator(c.options, c.geoEnricher, c.dnsEnricher)
 		aggregator.Enrich(&login)
 	}
 
-	// format the message and dispatch it
 	formatted := formatter.Format(login)
 	err = c.dispatcher.Send(formatted)
 	if err != nil {
