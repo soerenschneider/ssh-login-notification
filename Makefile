@@ -19,3 +19,9 @@ clean:
 
 build:
 	go build
+
+crosscompile:
+	if [ ! -d build ]; then mkdir build; fi
+	env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o build/ssh-login-notification.amd64 ./main.go
+	env GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o build/ssh-login-notification.arm7 ./main.go
+	env GOOS=linux GOARCH=arm GOARM=5 CGO_ENABLED=0 go build -o build/ssh-login-notification.arm5 ./main.go
