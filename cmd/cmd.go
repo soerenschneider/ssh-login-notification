@@ -20,9 +20,9 @@ const (
 // FireUp parses the user supplied input and starts this whole mess.
 func FireUp() *cobra.Command {
 	viper.AutomaticEnv()
-	viper.SetConfigName("ssh-login-notification")
+	viper.SetConfigName("conf")
 	viper.SetConfigType("json")
-	viper.AddConfigPath("/etc/default/")
+	viper.AddConfigPath("/etc/ssh-login-notification/")
 	viper.AddConfigPath("$HOME/.config/ssh-login-notification")
 
 	err := viper.ReadInConfig()
